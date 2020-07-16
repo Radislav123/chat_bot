@@ -1,5 +1,3 @@
-import logging
-import time
 import flask
 import telebot
 
@@ -11,9 +9,6 @@ WEBHOOK_LISTEN = "0.0.0.0"  # In some VPS you may need to put here the IP addr
 
 WEBHOOK_URL_BASE = "http://%s:%s" % (WEBHOOK_HOST, WEBHOOK_PORT)
 WEBHOOK_URL_PATH = "/%s/" % API_TOKEN
-
-logger = telebot.logger
-telebot.logger.setLevel(logging.INFO)
 
 bot = telebot.TeleBot(API_TOKEN)
 
@@ -52,8 +47,6 @@ def echo_message(message):
 
 # Remove webhook, it fails sometimes the set if there is a previous webhook
 bot.remove_webhook()
-
-time.sleep(0.1)
 
 # Set webhook
 bot.set_webhook(url = WEBHOOK_URL_BASE + WEBHOOK_URL_PATH)
