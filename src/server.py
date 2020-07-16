@@ -3,10 +3,10 @@ import telebot
 
 API_TOKEN = "933175966:AAENp5e-3y2DzknBhNPQZ_HAzerkbjX-a1E"
 
-#www.simplebot.ru
+# www.simplebot.ru
 WEBHOOK_HOST = "18.218.144.4"
 WEBHOOK_PORT = 8443  # 443, 80, 88 or 8443 (port need to be 'open')
-WEBHOOK_LISTEN = WEBHOOK_HOST  # In some VPS you may need to put here the IP addr
+WEBHOOK_LISTEN = "0.0.0.0"  # In some VPS you may need to put here the IP addr
 
 WEBHOOK_SSL_CERT = '../attachments/webhook_cert.pem'  # Path to the ssl certificate
 WEBHOOK_SSL_PRIV = '../attachments/webhook_pkey.pem'  # Path to the ssl private key
@@ -52,7 +52,7 @@ def echo_message(message):
 bot.remove_webhook()
 
 # Set webhook
-bot.set_webhook(url = WEBHOOK_URL_BASE + WEBHOOK_URL_PATH, certificate=open(WEBHOOK_SSL_CERT, 'r'))
+bot.set_webhook(url = WEBHOOK_URL_BASE + WEBHOOK_URL_PATH, certificate = open(WEBHOOK_SSL_CERT, 'r'))
 
 # Start flask server
 app.run(host = WEBHOOK_LISTEN, port = WEBHOOK_PORT, debug = True, ssl_context = (WEBHOOK_SSL_CERT, WEBHOOK_SSL_PRIV))
