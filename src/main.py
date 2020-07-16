@@ -10,5 +10,13 @@ def repeat_all_messages(message): # Название функции не игр�
 	bot.send_message(message.chat.id, message.text)
 
 
+#@bot.message_handler(commands = ["get_test_keyboard"])
+#def test_keyboard(message):
+#	keyboard_markup = telebot.types.ReplyKeyboardMarkup()
+#	keyboard_markup.add("test", "it is test too")
+#	bot.send_message(message.chat.id, "text for user", reply_markup = keyboard_markup)
+#	return keyboard_markup
+
+
 if __name__ == '__main__':
-	bot.polling(none_stop=True)
+	bot.polling(none_stop = True)
