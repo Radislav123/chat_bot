@@ -14,6 +14,7 @@ WEBHOOK_SSL_CERT = '../attachments/webhook_cert.pem'  # Path to the ssl certific
 WEBHOOK_SSL_PRIV = '../attachments/webhook_pkey.pem'  # Path to the ssl private key
 
 WEBHOOK_URL_BASE = "https://%s:%s" % (WEBHOOK_HOST, WEBHOOK_PORT)
+print(WEBHOOK_URL_BASE)
 WEBHOOK_URL_PATH = "/%s/" % API_TOKEN
 
 bot = telebot.TeleBot(API_TOKEN)
@@ -38,14 +39,8 @@ def webhook():
 		flask.abort(403)
 
 
-# Handle '/start' and '/help'
-@bot.message_handler(commands = ["help", "start"])
-def send_welcome(message):
-	bot.reply_to(message, "Hi there, I am EchoBot.\nI am here to echo your kind words back to you.")
-
-
 # Handle all other messages
-@bot.message_handler(func = lambda message: True, content_types = ["text"])
+@bot.message_handler(content_types = ["text"])
 def echo_message(message):
 	bot.reply_to(message, message.text)
 
@@ -59,4 +54,4 @@ time.sleep(0.1)
 bot.set_webhook(url = WEBHOOK_URL_BASE + WEBHOOK_URL_PATH, certificate = open(WEBHOOK_SSL_CERT, 'r'))
 
 # Start flask server
-app.run(host = WEBHOOK_LISTEN, port = WEBHOOK_PORT, ssl_context = (WEBHOOK_SSL_CERT, WEBHOOK_SSL_PRIV))
+app.run(host = WEBHOOK_LISTEN, port = WEBHOOK_PORT, debug = True, ssl_context = (WEBHOOK_SSL_CERT, WEBHOOK_SSL_PRIV))
