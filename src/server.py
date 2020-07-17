@@ -5,9 +5,10 @@ import time
 API_TOKEN = "933175966:AAENp5e-3y2DzknBhNPQZ_HAzerkbjX-a1E"
 
 # www.simplebot.ru
-WEBHOOK_HOST = "18.218.144.4"
+IP = "18.218.144.4"
+WEBHOOK_HOST = IP + "/" + API_TOKEN
 WEBHOOK_PORT = 8443  # 443, 80, 88 or 8443 (port need to be 'open')
-WEBHOOK_LISTEN = "0.0.0.0"  # In some VPS you may need to put here the IP addr
+WEBHOOK_LISTEN = IP  # In some VPS you may need to put here the IP addr
 
 WEBHOOK_SSL_CERT = '../attachments/webhook_cert.pem'  # Path to the ssl certificate
 WEBHOOK_SSL_PRIV = '../attachments/webhook_pkey.pem'  # Path to the ssl private key
