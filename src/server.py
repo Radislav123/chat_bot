@@ -14,7 +14,6 @@ WEBHOOK_SSL_CERT = '../attachments/webhook_cert.pem'  # Path to the ssl certific
 WEBHOOK_SSL_PRIV = '../attachments/webhook_pkey.pem'  # Path to the ssl private key
 
 WEBHOOK_URL_BASE = "https://%s:%s" % (WEBHOOK_HOST, WEBHOOK_PORT)
-print(WEBHOOK_URL_BASE)
 WEBHOOK_URL_PATH = "/%s/" % API_TOKEN
 
 bot = telebot.TeleBot(API_TOKEN)
