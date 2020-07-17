@@ -6,7 +6,7 @@ API_TOKEN = "933175966:AAENp5e-3y2DzknBhNPQZ_HAzerkbjX-a1E"
 
 # www.simplebot.ru
 IP = "18.218.144.4"
-WEBHOOK_HOST = IP + "/" + API_TOKEN
+WEBHOOK_HOST = "0.0.0.0"
 WEBHOOK_PORT = 8443  # 443, 80, 88 or 8443 (port need to be 'open')
 WEBHOOK_LISTEN = IP  # In some VPS you may need to put here the IP addr
 
