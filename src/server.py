@@ -27,21 +27,21 @@ def index():
 
 
 # Process webhook calls
-@app.route(WEBHOOK_URL_PATH, methods = ['POST', "GET"])
+@app.route(WEBHOOK_URL_PATH, methods = ['POST'])
 def webhook():
 	if flask.request.headers.get('content-type') == 'application/json':
 		json_string = flask.request.get_data().decode('utf-8')
 		update = telebot.types.Update.de_json(json_string)
 		bot.process_new_updates([update])
-		return 'test'
+		return ''
 	else:
 		flask.abort(403)
 
 
 # Handle all other messages
-# @bot.message_handler(content_types = ["text"])
-# def echo_message(message):
-#	bot.reply_to(message, message.text)
+@bot.message_handler(content_types = ["text"])
+def echo_message(message):
+	bot.reply_to(message, message.text)
 
 
 # Remove webhook, it fails sometimes the set if there is a previous webhook
