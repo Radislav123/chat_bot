@@ -22,9 +22,9 @@ app = flask.Flask(__name__)
 
 
 # Empty webserver index, return nothing, just http 200
-@app.route('/', methods = ['GET', 'HEAD'])
+@app.route('/')
 def index():
-	return ''
+	return 'Hello, world!'
 
 
 # Process webhook calls
@@ -40,9 +40,9 @@ def webhook():
 
 
 # Handle all other messages
-@bot.message_handler(content_types = ["text"])
-def echo_message(message):
-	bot.reply_to(message, message.text)
+# @bot.message_handler(content_types = ["text"])
+# def echo_message(message):
+#	bot.reply_to(message, message.text)
 
 
 # Remove webhook, it fails sometimes the set if there is a previous webhook
@@ -52,7 +52,6 @@ time.sleep(0.1)
 
 # Set webhook
 bot.set_webhook(url = WEBHOOK_URL_BASE + WEBHOOK_URL_PATH, certificate = open(WEBHOOK_SSL_CERT, 'r'))
-print(WEBHOOK_URL_BASE + WEBHOOK_URL_PATH)
 
 # Start flask server
 app.run(host = WEBHOOK_LISTEN, port = WEBHOOK_PORT, debug = True, ssl_context = (WEBHOOK_SSL_CERT, WEBHOOK_SSL_PRIV))
