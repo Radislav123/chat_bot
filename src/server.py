@@ -6,6 +6,7 @@ API_TOKEN = "933175966:AAENp5e-3y2DzknBhNPQZ_HAzerkbjX-a1E"
 
 # www.simplebot.ru
 IP = "18.218.144.4"
+# IP = "172.31.17.202"
 WEBHOOK_HOST = IP
 WEBHOOK_PORT = 8443  # 443, 80, 88 or 8443 (port need to be 'open')
 WEBHOOK_LISTEN = "0.0.0.0"  # In some VPS you may need to put here the IP addr
@@ -53,5 +54,5 @@ time.sleep(0.1)
 bot.set_webhook(url = WEBHOOK_URL_BASE + WEBHOOK_URL_PATH, certificate = open(WEBHOOK_SSL_CERT, 'r'))
 
 # Start flask server
-# app.run(host = WEBHOOK_LISTEN, port = WEBHOOK_PORT, debug = True, ssl_context = (WEBHOOK_SSL_CERT, WEBHOOK_SSL_PRIV))
-app.run(host = WEBHOOK_HOST, port = WEBHOOK_PORT, debug = True, ssl_context = (WEBHOOK_SSL_CERT, WEBHOOK_SSL_PRIV))
+app.run(host = WEBHOOK_LISTEN, port = WEBHOOK_PORT, debug = True, ssl_context = (WEBHOOK_SSL_CERT, WEBHOOK_SSL_PRIV))
+# app.run(host = WEBHOOK_HOST, port = WEBHOOK_PORT, debug = True, ssl_context = (WEBHOOK_SSL_CERT, WEBHOOK_SSL_PRIV))
