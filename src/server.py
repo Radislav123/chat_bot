@@ -28,7 +28,7 @@ def index():
 
 
 # Process webhook calls
-@app.route(WEBHOOK_URL_PATH, methods = ['POST'])
+@app.route(WEBHOOK_URL_PATH, methods = ['POST', "GET"])
 def webhook():
 	if flask.request.headers.get('content-type') == 'application/json':
 		json_string = flask.request.get_data().decode('utf-8')
