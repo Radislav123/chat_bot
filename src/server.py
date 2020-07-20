@@ -47,13 +47,13 @@ def echo_message(message):
 	bot.reply_to(message, message.text)
 
 
-# Remove webhook, it fails sometimes the set if there is a previous webhook
-bot.remove_webhook()
+if __name__ == '__main__':
+	# Remove webhook, it fails sometimes the set if there is a previous webhook
+	bot.remove_webhook()
+	time.sleep(0.1)
 
-time.sleep(0.1)
+	# Set webhook
+	bot.set_webhook(url = WEBHOOK_URL_BASE + WEBHOOK_URL_PATH, certificate = open(WEBHOOK_SSL_CERT, 'r'))
 
-# Set webhook
-bot.set_webhook(url = WEBHOOK_URL_BASE + WEBHOOK_URL_PATH, certificate = open(WEBHOOK_SSL_CERT, 'r'))
-
-# Start flask server
-app.run(host = WEBHOOK_LISTEN, port = WEBHOOK_PORT, debug = True, ssl_context = (WEBHOOK_SSL_CERT, WEBHOOK_SSL_PRIV))
+	# Start flask server
+	app.run(host = WEBHOOK_LISTEN, port = WEBHOOK_PORT, ssl_context = (WEBHOOK_SSL_CERT, WEBHOOK_SSL_PRIV))
