@@ -54,7 +54,6 @@ def send_welcome(message):
 # Handle all other messages
 @bot.message_handler(content_types = ["text"])
 def echo_message(message):
-	print("i catch: " + message)
 	bot.reply_to(message, message.text)
 
 
