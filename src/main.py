@@ -1,8 +1,13 @@
 # -*- coding: utf-8 -*-
 import telebot
+import time
 
 
 bot = telebot.TeleBot("933175966:AAENp5e-3y2DzknBhNPQZ_HAzerkbjX-a1E")
+
+bot.remove_webhook()
+
+time.sleep(0.1)
 
 
 @bot.message_handler(content_types=["text"])
