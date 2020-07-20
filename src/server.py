@@ -28,9 +28,9 @@ def index():
 
 
 # Process webhook calls
-@app.route(WEBHOOK_URL_PATH, methods = ['POST'])
+@app.route(WEBHOOK_URL_PATH, methods = ["POST"])
 def webhook():
-	if flask.request.headers.get('content-type') == 'application/json':
+	if flask.request.headers.get("content-type") == 'application/json':
 		json_string = flask.request.get_data().decode('utf-8')
 		update = telebot.types.Update.de_json(json_string)
 		bot.process_new_updates([update])
@@ -42,6 +42,7 @@ def webhook():
 # Handle all other messages
 @bot.message_handler(content_types = ["text"])
 def echo_message(message):
+	print("i catch: " + message)
 	bot.reply_to(message, message.text)
 
 
@@ -55,4 +56,3 @@ bot.set_webhook(url = WEBHOOK_URL_BASE + WEBHOOK_URL_PATH, certificate = open(WE
 
 # Start flask server
 app.run(host = WEBHOOK_LISTEN, port = WEBHOOK_PORT, debug = True, ssl_context = (WEBHOOK_SSL_CERT, WEBHOOK_SSL_PRIV))
-# app.run(host = WEBHOOK_HOST, port = WEBHOOK_PORT, debug = True, ssl_context = (WEBHOOK_SSL_CERT, WEBHOOK_SSL_PRIV))
