@@ -11,4 +11,4 @@ def index():
 	return 'Hello, world!'
 
 
-app.run(host = "0.0.0.0", port = 8443)
+app.run(host = "0.0.0.0", port = 80)
