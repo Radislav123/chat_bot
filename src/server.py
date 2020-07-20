@@ -58,7 +58,7 @@ if __name__ == '__main__':
 	print("it is main")
 	# Remove webhook, it fails sometimes the set if there is a previous webhook
 	bot.remove_webhook()
-	time.sleep(0.1)
+	time.sleep(3)
 
 	# Set webhook
 	bot.set_webhook(url = WEBHOOK_URL_BASE + WEBHOOK_URL_PATH, certificate = open(WEBHOOK_SSL_CERT, 'r'))
