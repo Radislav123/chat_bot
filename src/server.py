@@ -21,7 +21,7 @@ app = flask.Flask(__name__)
 
 
 # Empty webserver index, return nothing, just http 200
-@app.route('/')
+@app.route('/', methods=['GET', 'HEAD'])
 def index():
 	return 'Hello, world!'
 
@@ -37,6 +37,13 @@ def webhook():
 		return ''
 	else:
 		flask.abort(403)
+
+
+# Handle '/start' and '/help'
+@bot.message_handler(commands=['help', 'start'])
+def send_welcome(message):
+	print("send_welcome message")
+	bot.reply_to(message, "Hi there, I am EchoBot.\nI am here to echo your kind words back to you.")
 
 
 # Handle all other messages
