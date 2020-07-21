@@ -1,4 +1,4 @@
-from .constants import *
+from constants import *
 import telebot
 import flask
 import time
@@ -58,6 +58,5 @@ if __name__ == '__main__':
 	app.run(
 		ssl_context = (WEBHOOK_SSL_CERTIFICATE, WEBHOOK_SSL_PRIVATE_KEY),
 		host = WEBHOOK_LISTEN,
-		port = WEBHOOK_PORT,
-		debug = True
+		port = WEBHOOK_PORT
 	)
