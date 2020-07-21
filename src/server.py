@@ -1,21 +1,8 @@
-import flask
+from .constants import *
 import telebot
+import flask
 import time
 
-API_TOKEN = "933175966:AAENp5e-3y2DzknBhNPQZ_HAzerkbjX-a1E"
-
-# www.simplebot.ru
-IP = "18.218.144.4"
-DOMAIN = "ec2-18-218-144-4.us-east-2.compute.amazonaws.com"
-WEBHOOK_HOST = IP
-WEBHOOK_PORT = 8443  # 443, 80, 88 or 8443 (port need to be 'open')
-WEBHOOK_LISTEN = "0.0.0.0"  # In some VPS you may need to put here the IP addr
-WEBHOOK_SSL_CERT = '../attachments/webhook_cert.pem'  # Path to the ssl certificate
-WEBHOOK_SSL_PRIV = '../attachments/webhook_pkey.pem'  # Path to the ssl private key
-
-
-WEBHOOK_URL_BASE = "https://%s:%s" % (WEBHOOK_HOST, WEBHOOK_PORT)
-WEBHOOK_URL_PATH = "/%s/" % API_TOKEN
 
 bot = telebot.TeleBot(API_TOKEN)
 app = flask.Flask(__name__)
@@ -24,13 +11,12 @@ app = flask.Flask(__name__)
 # Empty webserver index, return nothing, just http 200
 @app.route('/', methods=['GET', 'HEAD'])
 def index():
-	return 'Hello, world!'
+	return "Hello, world!\nI\'m SimpleHelper bot and it's root page of my webhook flask-server."
 
 
 # Process webhook calls
 @app.route(WEBHOOK_URL_PATH, methods = ["POST"])
 def webhook():
-	print("it is webhook message")
 	if flask.request.headers.get("content-type") == 'application/json':
 		json_string = flask.request.get_data().decode('utf-8')
 		update = telebot.types.Update.de_json(json_string)
@@ -40,10 +26,17 @@ def webhook():
 		flask.abort(403)
 
 
+@bot.message_handler(commands = ["get_test_keyboard"])
+def test_keyboard(message):
+	keyboard_markup = telebot.types.ReplyKeyboardMarkup()
+	keyboard_markup.add("test", "it is test too")
+	bot.send_message(message.chat.id, "text for user", reply_markup = keyboard_markup)
+	return keyboard_markup
+
+
 # Handle '/start' and '/help'
 @bot.message_handler(commands=['help', 'start'])
 def send_welcome(message):
-	print("send_welcome message")
 	bot.reply_to(message, "Hi there, I am EchoBot.\nI am here to echo your kind words back to you.")
 
 
@@ -54,13 +47,17 @@ def echo_message(message):
 
 
 if __name__ == '__main__':
-	print("it is main")
-	# Remove webhook, it fails sometimes the set if there is a previous webhook
+	# Remove old webhook, it fails sometimes the set if there is a previous webhook
 	bot.remove_webhook()
-	time.sleep(3)
+	time.sleep(0.1)
 
 	# Set webhook
-	bot.set_webhook(url = WEBHOOK_URL_BASE + WEBHOOK_URL_PATH, certificate = open(WEBHOOK_SSL_CERT, 'r'))
+	bot.set_webhook(url = WEBHOOK_URL_FULL, certificate = open(WEBHOOK_SSL_CERTIFICATE, 'r'))
 
 	# Start flask server
-	app.run(host = WEBHOOK_LISTEN, port = WEBHOOK_PORT, debug = True, ssl_context = (WEBHOOK_SSL_CERT, WEBHOOK_SSL_PRIV))
+	app.run(
+		ssl_context = (WEBHOOK_SSL_CERTIFICATE, WEBHOOK_SSL_PRIVATE_KEY),
+		host = WEBHOOK_LISTEN,
+		port = WEBHOOK_PORT,
+		debug = True
+	)
