@@ -1,5 +1,6 @@
 from constants import *
 from commands import *
+import platform
 import telebot
 import flask
 import time
@@ -59,15 +60,21 @@ def set_command_list():
 	bot.set_my_commands(commands)
 
 
+def get_platform():
+	return platform.node()
+
+
 if __name__ == '__main__':
 	# Remove old webhook, it fails sometimes the set if there is a previous webhook
 	bot.remove_webhook()
-	webhook = False
 	time.sleep(0.1)
 
 	set_command_list()
 
-	if webhook:
+	platform = get_platform()
+
+	if platform == SERVER_MACHINE_NAME:
+		print("running on server")
 		# Set webhook
 		bot.set_webhook(url = WEBHOOK_URL_FULL, certificate = open(WEBHOOK_SSL_CERTIFICATE, 'r'))
 
@@ -77,5 +84,8 @@ if __name__ == '__main__':
 			host = WEBHOOK_LISTEN,
 			port = WEBHOOK_PORT
 		)
-	else:
+	elif platform == LAPTOP_MACHINE_NAME:
+		print("running on laptop")
 		bot.polling(none_stop = True)
+	else:
+		print("undefined machine\nnot running")

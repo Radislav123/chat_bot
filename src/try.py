@@ -1,6 +1,7 @@
 import requests
 import webbrowser
 import tempfile
+import platform
 
 
 def try_urls():
@@ -23,4 +24,8 @@ def get_ip():
 	return requests.get('https://api.ipify.org').text
 
 
-print(get_ip())
+def get_platform():
+	return platform.node()
+
+
+print(get_platform())
