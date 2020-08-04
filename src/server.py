@@ -51,7 +51,7 @@ if __name__ == '__main__':
 	bot.remove_webhook()
 	time.sleep(0.1)
 
-	webhook = True
+	webhook = False
 
 	if webhook:
 		# Set webhook
