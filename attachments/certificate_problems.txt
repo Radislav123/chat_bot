@@ -1,3 +1,4 @@
+0) самоподписанный сертификат ("https://groosha.gitbook.io/telegram-bot-lessons/chapter4") (в консоли git есть openssl)
 1) были проблемы с тем, что Телеграмм не доверял моему сертификату, который я отправлял методом setWebhook (я так думаю)
 2) по рекомендации отсюда (https://core.telegram.org/bots/webhooks#setting-a-verified-webhook-with-an-untrusted-root) я выполнил
 "curl -F "url=https://<YOURDOMAIN.EXAMPLE>" -F "certificate=@<YOURCAROOTCERTIFICATE>.pem" https://api.telegram.org/bot<YOURTOKEN>/setWebhook"
