@@ -8,7 +8,7 @@ bot = telebot.TeleBot(API_TOKEN)
 app = flask.Flask(__name__)
 
 
-# Empty webserver index, return nothing, just http 200
+# Empty webserver index, return http 200
 @app.route('/', methods=['GET', 'HEAD'])
 def index():
 	return "Hello, world!\nI\'m SimpleHelper bot and it's root page of my webhook flask-server."
@@ -34,7 +34,7 @@ def test_keyboard(message):
 	return keyboard_markup
 
 
-# Handle '/start' and '/help'
+# Handle "/start" and "/help"
 @bot.message_handler(commands=['help', 'start'])
 def send_welcome(message):
 	bot.reply_to(message, "Hi there, I am EchoBot.\nI am here to echo your kind words back to you.")
@@ -51,12 +51,17 @@ if __name__ == '__main__':
 	bot.remove_webhook()
 	time.sleep(0.1)
 
-	# Set webhook
-	bot.set_webhook(url = WEBHOOK_URL_FULL, certificate = open(WEBHOOK_SSL_CERTIFICATE, 'r'))
+	webhook = True
 
-	# Start flask server
-	app.run(
-		ssl_context = (WEBHOOK_SSL_CERTIFICATE, WEBHOOK_SSL_PRIVATE_KEY),
-		host = WEBHOOK_LISTEN,
-		port = WEBHOOK_PORT
-	)
+	if webhook:
+		# Set webhook
+		bot.set_webhook(url = WEBHOOK_URL_FULL, certificate = open(WEBHOOK_SSL_CERTIFICATE, 'r'))
+
+		# Start flask server
+		app.run(
+			ssl_context = (WEBHOOK_SSL_CERTIFICATE, WEBHOOK_SSL_PRIVATE_KEY),
+			host = WEBHOOK_LISTEN,
+			port = WEBHOOK_PORT
+		)
+	else:
+		bot.polling(none_stop = True)
