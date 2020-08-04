@@ -2,7 +2,7 @@
 with open("../attachments/telegram_bot_token.txt", 'r') as file:
 	API_TOKEN = file.read().replace('\n', '')
 
-AWS_INSTANCE_IP = "18.218.144.4"
+AWS_INSTANCE_IP = "52.14.162.201"
 WEBHOOK_HOST = AWS_INSTANCE_IP
 WEBHOOK_PORT = 8443  # 443, 80, 88 or 8443 (port need to be 'open')
 WEBHOOK_LISTEN = "0.0.0.0"  # In some VPS you may need to put here the IP addr
