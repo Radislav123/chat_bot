@@ -38,7 +38,7 @@ def command_list_command(message):
 
 
 @bot.message_handler(commands = [TEST_KEYBOARD_COMMAND])
-def show_test_keyboard_command(message):
+def test_keyboard_command(message):
 	keyboard_markup = telebot.types.ReplyKeyboardMarkup()
 	keyboard_markup.add("test", "it is test too")
 	bot.send_message(message.chat.id, "text for user", reply_markup = keyboard_markup)
@@ -51,7 +51,7 @@ def echo_message(message):
 	bot.reply_to(message, message.text)
 
 
-def set_command_list():
+def set_bot_command_list():
 	commands = [
 		telebot.types.BotCommand(HELP_COMMAND, HELP_COMMAND_DESCRIPTION),
 		telebot.types.BotCommand(COMMAND_LIST_COMMAND, COMMAND_LIST_COMMAND_DESCRIPTION),
@@ -69,12 +69,12 @@ if __name__ == '__main__':
 	bot.remove_webhook()
 	time.sleep(0.1)
 
-	set_command_list()
+	set_bot_command_list()
 
 	platform = get_platform()
 
 	if platform == SERVER_MACHINE_NAME:
-		print("running on server")
+		print("running on the dedicated server")
 		# Set webhook
 		bot.set_webhook(url = WEBHOOK_URL_FULL, certificate = open(WEBHOOK_SSL_CERTIFICATE, 'r'))
 
@@ -85,7 +85,7 @@ if __name__ == '__main__':
 			port = WEBHOOK_PORT
 		)
 	elif platform == LAPTOP_MACHINE_NAME:
-		print("running on laptop")
+		print("running on the local machine")
 		bot.polling(none_stop = True)
 	else:
 		print("undefined machine\nnot running")
