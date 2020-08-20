@@ -14,3 +14,5 @@ WEBHOOK_URL_FULL = WEBHOOK_URL_BASE + WEBHOOK_URL_PATH
 
 SERVER_MACHINE_NAME = "EC2AMAZ-H0K2IKR"
 LAPTOP_MACHINE_NAME = "LAPTOP-8DTEU61A"
+
+BOT_DESCRIPTION = "Тут должно быть описание бота (в том числе и к какому курсу он прикреплен)"

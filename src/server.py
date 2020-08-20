@@ -22,22 +22,18 @@ def webhook():
 
 
 @bot.message_handler(commands = [HELP_COMMAND])
-def help_command(message):
-	return bot.reply_to(message, "Hi there, I am EchoBot.\nI am here to echo your kind words back to you.")
+def command_list_command(message):
+	return bot.send_message(message.chat.id, BOT_DESCRIPTION)
 
 
 @bot.message_handler(commands = [COMMAND_LIST_COMMAND])
 def command_list_command(message):
-	return bot.send_message(message.chat.id, "it is command list")
+	return bot.send_message(message.chat.id, get_command_list_text())
 
 
 @bot.message_handler(commands = [MAIN_MENU_COMMAND])
 def main_menu_command(message):
-	return bot.send_message(message.chat.id, "temp")
-
-
-@bot.message_handler(commands = [TEST_KEYBOARD_COMMAND])
-def test_keyboard_command(message):
+	# todo: тут должны быть команды из тетради вместо "test"
 	keyboard_markup = get_keyboard_markup(["test", "it is test too"])
 	bot.send_message(message.chat.id, "text for user", reply_markup = keyboard_markup)
 	return keyboard_markup
