@@ -31,14 +31,6 @@ def command_list_command(message):
 	return bot.send_message(message.chat.id, get_command_list_text())
 
 
-@bot.message_handler(commands = [MAIN_MENU_COMMAND])
-def main_menu_command(message):
-	# todo: тут должны быть команды из тетради вместо "test"
-	keyboard_markup = get_keyboard_markup(["test", "it is test too"])
-	bot.send_message(message.chat.id, "text for user", reply_markup = keyboard_markup)
-	return keyboard_markup
-
-
 # Handle all other messages
 @bot.message_handler(content_types = ["text"])
 def echo_message(message):

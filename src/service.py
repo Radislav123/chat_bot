@@ -12,8 +12,10 @@ def get_platform():
 	return platform.node()
 
 
-def get_keyboard_markup(keys):
-	return telebot.types.ReplyKeyboardMarkup().add(*keys)
+def get_keyboard_markup(*keys):
+	keyboard_markup = telebot.types.ReplyKeyboardMarkup()
+	keyboard_markup.add(*keys)
+	return keyboard_markup
 
 
 def get_command_list_text():

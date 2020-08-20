@@ -5,9 +5,6 @@ HELP_COMMAND_DESCRIPTION = "информация о боте"
 COMMAND_LIST_COMMAND = "command_list"
 COMMAND_LIST_COMMAND_DESCRIPTION = "список доступных команд"
 
-MAIN_MENU_COMMAND = "main_menu"
-MAIN_MENU_COMMAND_DESCRIPTION = "главное меню"
-
 COURSE_LINKS_COMMAND = "course_links"
 COURSE_LINKS_COMMAND_DESCRIPTION = "ссылки на элементы курса"
 
