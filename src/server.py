@@ -1,12 +1,6 @@
-from constants import *
 from commands import *
-import platform
-import telebot
-import flask
+from service import *
 import time
-
-bot = telebot.TeleBot(API_TOKEN)
-app = flask.Flask(__name__)
 
 
 # Empty webserver index, return http 200
@@ -24,23 +18,27 @@ def webhook():
 		bot.process_new_updates([update])
 		return ''
 	else:
-		flask.abort(403)
+		return flask.abort(403)
 
 
 @bot.message_handler(commands = [HELP_COMMAND])
 def help_command(message):
-	bot.reply_to(message, "Hi there, I am EchoBot.\nI am here to echo your kind words back to you.")
+	return bot.reply_to(message, "Hi there, I am EchoBot.\nI am here to echo your kind words back to you.")
 
 
 @bot.message_handler(commands = [COMMAND_LIST_COMMAND])
 def command_list_command(message):
-	bot.send_message(message.chat.id, "it is command list")
+	return bot.send_message(message.chat.id, "it is command list")
+
+
+@bot.message_handler(commands = [MAIN_MENU_COMMAND])
+def main_menu_command(message):
+	return bot.send_message(message.chat.id, "temp")
 
 
 @bot.message_handler(commands = [TEST_KEYBOARD_COMMAND])
 def test_keyboard_command(message):
-	keyboard_markup = telebot.types.ReplyKeyboardMarkup()
-	keyboard_markup.add("test", "it is test too")
+	keyboard_markup = get_keyboard_markup(["test", "it is test too"])
 	bot.send_message(message.chat.id, "text for user", reply_markup = keyboard_markup)
 	return keyboard_markup
 
@@ -48,20 +46,7 @@ def test_keyboard_command(message):
 # Handle all other messages
 @bot.message_handler(content_types = ["text"])
 def echo_message(message):
-	bot.reply_to(message, message.text)
-
-
-def set_bot_command_list():
-	commands = [
-		telebot.types.BotCommand(HELP_COMMAND, HELP_COMMAND_DESCRIPTION),
-		telebot.types.BotCommand(COMMAND_LIST_COMMAND, COMMAND_LIST_COMMAND_DESCRIPTION),
-		telebot.types.BotCommand(TEST_KEYBOARD_COMMAND, TEST_KEYBOARD_COMMAND_DESCRIPTION)
-	]
-	bot.set_my_commands(commands)
-
-
-def get_platform():
-	return platform.node()
+	return bot.reply_to(message, message.text)
 
 
 if __name__ == '__main__':
