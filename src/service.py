@@ -12,8 +12,16 @@ def get_platform():
 	return platform.node()
 
 
+def get_course_links():
+	button = telebot.types.InlineKeyboardButton(
+		text = "ссылка на курс",
+		url = COURSE_LINK
+	)
+	return get_keyboard_markup(button)
+
+
 def get_keyboard_markup(*keys):
-	keyboard_markup = telebot.types.ReplyKeyboardMarkup()
+	keyboard_markup = telebot.types.InlineKeyboardMarkup()
 	keyboard_markup.add(*keys)
 	return keyboard_markup
 

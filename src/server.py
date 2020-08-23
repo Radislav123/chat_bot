@@ -31,6 +31,11 @@ def command_list_command(message):
 	return bot.send_message(message.chat.id, get_command_list_text())
 
 
+@bot.message_handler(commands = [COURSE_LINKS_COMMAND])
+def course_links_command(message):
+	return bot.send_message(message.chat.id, COURSE_LINKS_COMMAND_DESCRIPTION, reply_markup = get_course_links())
+
+
 # Handle all other messages
 @bot.message_handler(content_types = ["text"])
 def echo_message(message):
