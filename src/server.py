@@ -36,6 +36,15 @@ def course_links_command(message):
 	return bot.send_message(message.chat.id, COURSE_LINKS_COMMAND_DESCRIPTION, reply_markup = get_course_links())
 
 
+@bot.message_handler(commands = [ADDITIONAL_MATERIALS_LINKS_COMMAND])
+def additional_materials_links_command(message):
+	return bot.send_message(
+		message.chat.id,
+		ADDITIONAL_MATERIALS_LINKS_COMMAND_DESCRIPTION,
+		reply_markup = get_additionals_materials_links()
+	)
+
+
 # Handle all other messages
 @bot.message_handler(content_types = ["text"])
 def echo_message(message):

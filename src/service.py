@@ -31,10 +31,16 @@ def get_course_links():
 			url = COURSE_LINK
 		)
 	]
-	button = telebot.types.InlineKeyboardButton(
-		text = "ссылка на курс",
-		url = COURSE_LINK
-	)
+	return get_keyboard_markup(*keys)
+
+
+def get_additionals_materials_links():
+	keys = [
+		telebot.types.InlineKeyboardButton(
+			text = "рекомендуемая литература",
+			url = "https://online.hse.ru/mod/page/view.php?id=48941"
+		)
+	]
 	return get_keyboard_markup(*keys)
 
 
