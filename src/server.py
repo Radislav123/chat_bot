@@ -41,8 +41,13 @@ def additional_materials_links_command(message):
 	return bot.send_message(
 		message.chat.id,
 		ADDITIONAL_MATERIALS_LINKS_COMMAND_DESCRIPTION,
-		reply_markup = get_additionals_materials_links()
+		reply_markup = get_additional_materials_links()
 	)
+
+
+@bot.message_handler(commands = [DEADLINES_COMMAND])
+def deadlines_command(message):
+	return bot.send_message(message.chat.id, get_deadlines_text())
 
 
 # Handle all other messages

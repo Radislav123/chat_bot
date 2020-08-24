@@ -34,7 +34,7 @@ def get_course_links():
 	return get_keyboard_markup(*keys)
 
 
-def get_additionals_materials_links():
+def get_additional_materials_links():
 	keys = [
 		telebot.types.InlineKeyboardButton(
 			text = "рекомендуемая литература",
@@ -42,6 +42,11 @@ def get_additionals_materials_links():
 		)
 	]
 	return get_keyboard_markup(*keys)
+
+
+def get_deadlines_text():
+	deadlines = "тут должен быть список дэдлайнов\nможно оформить в виде кнопок с ссылками"
+	return deadlines
 
 
 def get_keyboard_markup(*keys):
