@@ -6,7 +6,7 @@ import time
 # Empty webserver index, return http 200
 @app.route('/', methods = ['GET', 'HEAD'])
 def index():
-	return "Hello, world!\nI\'m SimpleHelper bot and it's root page of my webhook flask-server."
+	return BOT_HTTP_INDEX_TEXT
 
 
 # Process webhook calls
