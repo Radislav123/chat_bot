@@ -13,11 +13,29 @@ def get_platform():
 
 
 def get_course_links():
+	keys = [
+		telebot.types.InlineKeyboardButton(
+			text = "первая важная ссылка",
+			url = "https://online.hse.ru/mod/forum/view.php?id=48811"
+		),
+		telebot.types.InlineKeyboardButton(
+			text = "вторая важная ссылка",
+			url = "https://online.hse.ru/mod/page/view.php?id=49106"
+		),
+		telebot.types.InlineKeyboardButton(
+			text = "третья важная ссылка",
+			url = "https://online.hse.ru/mod/page/view.php?id=123827"
+		),
+		telebot.types.InlineKeyboardButton(
+			text = "ссылка на курс",
+			url = COURSE_LINK
+		)
+	]
 	button = telebot.types.InlineKeyboardButton(
 		text = "ссылка на курс",
 		url = COURSE_LINK
 	)
-	return get_keyboard_markup(button)
+	return get_keyboard_markup(*keys)
 
 
 def get_keyboard_markup(*keys):
