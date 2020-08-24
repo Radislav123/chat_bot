@@ -27,7 +27,7 @@ def get_course_links():
 			url = "https://online.hse.ru/mod/page/view.php?id=123827"
 		),
 		telebot.types.InlineKeyboardButton(
-			text = "ссылка на курс",
+			text = COURSE_LINK_DESCRIPTION,
 			url = COURSE_LINK
 		)
 	]

@@ -22,8 +22,12 @@ def webhook():
 
 
 @bot.message_handler(commands = [HELP_COMMAND])
-def command_list_command(message):
-	return bot.send_message(message.chat.id, BOT_DESCRIPTION)
+def help_command(message):
+	keyboard_markup = get_keyboard_markup(telebot.types.InlineKeyboardButton(
+		text = COURSE_LINK_DESCRIPTION,
+		url = COURSE_LINK
+	))
+	return bot.send_message(message.chat.id, BOT_DESCRIPTION, reply_markup = keyboard_markup)
 
 
 @bot.message_handler(commands = [COMMAND_LIST_COMMAND])
