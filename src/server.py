@@ -21,7 +21,7 @@ def webhook():
 		return flask.abort(403)
 
 
-@bot.message_handler(commands = [HELP_COMMAND])
+@bot.message_handler(commands = [HELP_COMMAND, START_COMMAND])
 def help_command(message):
 	keyboard_markup = get_keyboard_markup(telebot.types.InlineKeyboardButton(
 		text = COURSE_LINK_DESCRIPTION,

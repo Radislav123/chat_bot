@@ -1,4 +1,7 @@
 
+START_COMMAND = "start"
+START_COMMAND_DESCRIPTION = "стартовая команда при запуске бота"
+
 HELP_COMMAND = "help"
 HELP_COMMAND_DESCRIPTION = "информация о боте"
 
