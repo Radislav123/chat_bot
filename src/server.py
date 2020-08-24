@@ -50,6 +50,12 @@ def deadlines_command(message):
 	return bot.send_message(message.chat.id, get_deadlines_text())
 
 
+@bot.message_handler(commands = [INTERVIEW_COMMAND])
+def interview_command(message):
+	text = "1) тут можно воткнуть кнопку-ссылку на гугл-опрос\n2) можно что-то налепить внутри бота"
+	return bot.send_message(message.chat.id, text)
+
+
 # Handle all other messages
 @bot.message_handler(content_types = ["text"])
 def echo_message(message):
