@@ -4,7 +4,6 @@ import requests
 import tempfile
 import platform
 import glob
-import os
 
 
 def try_urls():
@@ -32,7 +31,7 @@ def get_platform():
 
 
 def temp():
-	path = str(Path().absolute().parent) + "\\course_fragments\\pages\\*.docx"
+	path = str(Path().absolute().parent) + "\\course_fragments\\books\\*"
 	filenames = glob.glob(path)
 	# files_path = [os.path.abspath(x) for x in os.listdir(path)]
 	return filenames

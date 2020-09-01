@@ -22,3 +22,5 @@ BOT_DESCRIPTION = "Тут должно быть описание бота (в т
 
 COURSE_LINK = "https://online.hse.ru/course/view.php?id=1845"
 COURSE_LINK_DESCRIPTION = "ссылка на курс"
+
+COURSE_FRAGMENTS_EXTENSION = "docx"

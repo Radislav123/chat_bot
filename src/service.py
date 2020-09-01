@@ -7,6 +7,7 @@ import random
 import flask
 import glob
 
+project_root_directory = str(Path().absolute().parent)
 bot = telebot.TeleBot(API_TOKEN)
 app = flask.Flask(__name__)
 commands = []
@@ -85,17 +86,43 @@ def set_bot_command_list():
 	return bot.set_my_commands(bot_commands)
 
 
-def get_fragments_from_pages_filenames():
-	path = str(Path().absolute().parent) + "\\course_fragments\\pages\\"
-	filenames = glob.glob(path + "*.docx")
-	return filenames
+def get_filepaths_by_path(path, extension = ''):
+	regular_path = path + '*'
+	if extension != '':
+		regular_path += "." + extension
+	return glob.glob(regular_path)
+
+
+def get_random_filepath_by_path(path, extension = ''):
+	filepaths = get_filepaths_by_path(path, extension)
+	return filepaths[random.randrange(len(filepaths))]
 
 
 def get_random_course_fragment_from_pages():
-	paths = get_fragments_from_pages_filenames()
-	fragment_path = paths[random.randrange(len(paths))]
+	fragment_path = get_random_filepath_by_path(
+		project_root_directory + "\\course_fragments\\pages\\",
+		COURSE_FRAGMENTS_EXTENSION
+	)
 	document = docx2python(fragment_path)
 	text = ""
 	for line in document.text.splitlines()[:-4]:
 		text = text + '\n' + line
 	return text[1:]
+
+
+def get_random_course_fragment_from_books():
+	book_path = get_random_filepath_by_path(project_root_directory + "\\course_fragments\\books\\") + "\\"
+	fragment_path = get_random_filepath_by_path(book_path, COURSE_FRAGMENTS_EXTENSION)
+	document = docx2python(fragment_path)
+	text = ""
+	for line in document.text.splitlines()[:-2]:
+		text = text + '\n' + line
+	return text[1:]
+
+
+def get_random_course_fragment():
+	if random.randrange(2):
+		text = get_random_course_fragment_from_pages()
+	else:
+		text = get_random_course_fragment_from_books()
+	return text

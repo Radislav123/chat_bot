@@ -63,7 +63,7 @@ def interview_command(message):
 # Handle all other messages
 @bot.message_handler(content_types = ["text"])
 def echo_message(message):
-	return bot.send_message(message.chat.id, get_random_course_fragment_from_pages())
+	return bot.send_message(message.chat.id, get_random_course_fragment())
 
 
 if __name__ == '__main__':
