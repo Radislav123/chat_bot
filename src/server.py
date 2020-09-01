@@ -86,7 +86,7 @@ if __name__ == '__main__':
 			host = WEBHOOK_LISTEN,
 			port = WEBHOOK_PORT
 		)
-	elif platform == LAPTOP_MACHINE_NAME:
+	elif platform == LAPTOP_MACHINE_NAME or platform == DESKTOP_MACHINE_NAME:
 		print("running on the local machine")
 		bot.polling(none_stop = True)
 	else:
