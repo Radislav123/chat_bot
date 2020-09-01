@@ -84,5 +84,7 @@ def set_bot_command_list():
 
 def get_random_course_fragment():
 	document = docx2python("../course_fragments/Ресурсы для проведения обзора литературы.docx")
-	text = document.text
-	return text
+	text = ""
+	for line in document.text.splitlines()[:-4]:
+		text = text + '\n' + line
+	return text[1:]

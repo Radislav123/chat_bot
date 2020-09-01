@@ -30,9 +30,12 @@ def get_platform():
 
 
 def get_random_course_fragment():
-	file = docx2python("../course_fragments/Ресурсы для проведения обзора литературы.docx")
-	text = file.text
-	return text
+	document = docx2python("../course_fragments/Ресурсы для проведения обзора литературы.docx")
+	text = ""
+	for line in document.text.splitlines()[:-4]:
+		if line != '':
+			text = text + '\n' + line
+	return text[1:]
 
 
-print(get_platform())
+print(get_random_course_fragment())
