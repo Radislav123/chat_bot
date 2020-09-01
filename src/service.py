@@ -1,3 +1,4 @@
+from docx2python import docx2python
 from constants import *
 import platform
 import telebot
@@ -79,3 +80,9 @@ def set_bot_command_list():
 	for pair in get_commands_with_descriptions():
 		bot_commands.append(telebot.types.BotCommand(pair[0], pair[1]))
 	return bot.set_my_commands(bot_commands)
+
+
+def get_random_course_fragment():
+	document = docx2python("../course_fragments/Ресурсы для проведения обзора литературы.docx")
+	text = document.text
+	return text

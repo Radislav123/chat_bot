@@ -2,6 +2,7 @@ import requests
 import webbrowser
 import tempfile
 import platform
+from docx2python import docx2python
 
 
 def try_urls():
@@ -26,6 +27,12 @@ def get_ip():
 
 def get_platform():
 	return platform.node()
+
+
+def get_random_course_fragment():
+	file = docx2python("../course_fragments/Ресурсы для проведения обзора литературы.docx")
+	text = file.text
+	return text
 
 
 print(get_platform())
