@@ -1,8 +1,11 @@
 from docx2python import docx2python
+from pathlib import Path
 from constants import *
 import platform
 import telebot
+import random
 import flask
+import glob
 
 bot = telebot.TeleBot(API_TOKEN)
 app = flask.Flask(__name__)
@@ -82,8 +85,16 @@ def set_bot_command_list():
 	return bot.set_my_commands(bot_commands)
 
 
-def get_random_course_fragment():
-	document = docx2python("../course_fragments/Ресурсы для проведения обзора литературы.docx")
+def get_fragments_from_pages_filenames():
+	path = str(Path().absolute().parent) + "\\course_fragments\\pages\\"
+	filenames = glob.glob(path + "*.docx")
+	return filenames
+
+
+def get_random_course_fragment_from_pages():
+	paths = get_fragments_from_pages_filenames()
+	fragment_path = paths[random.randrange(len(paths))]
+	document = docx2python(fragment_path)
 	text = ""
 	for line in document.text.splitlines()[:-4]:
 		text = text + '\n' + line

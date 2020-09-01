@@ -1,8 +1,10 @@
-import requests
+from pathlib import Path
 import webbrowser
+import requests
 import tempfile
 import platform
-from docx2python import docx2python
+import glob
+import os
 
 
 def try_urls():
@@ -29,13 +31,11 @@ def get_platform():
 	return platform.node()
 
 
-def get_random_course_fragment():
-	document = docx2python("../course_fragments/Ресурсы для проведения обзора литературы.docx")
-	text = ""
-	for line in document.text.splitlines()[:-4]:
-		if line != '':
-			text = text + '\n' + line
-	return text[1:]
+def temp():
+	path = str(Path().absolute().parent) + "\\course_fragments\\pages\\*.docx"
+	filenames = glob.glob(path)
+	# files_path = [os.path.abspath(x) for x in os.listdir(path)]
+	return filenames
 
 
-print(get_random_course_fragment())
+print(temp())
