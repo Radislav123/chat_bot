@@ -1,3 +1,4 @@
+from broadcast import *
 from commands import *
 from service import *
 import time
@@ -45,11 +46,9 @@ def start_command(message):
 @bot.message_handler(commands = [SET_TIMER_COMMAND])
 def set_timer_command(message):
 	call_back_data = "set timer %d"
-	timers = [24, 12, 8, 6, 4, 3, 2, 1]
-	timers.reverse()
 	keys = []
 
-	for timer in timers:
+	for timer in TIMERS:
 		keys.append(telebot.types.InlineKeyboardButton(text = str(timer), callback_data = call_back_data % timer))
 
 	keyboard_markup = get_keyboard_markup(*keys)
@@ -107,7 +106,7 @@ def interview_command(message):
 # Handle all other text messages
 @bot.message_handler(content_types = ["text"])
 def echo_message(message):
-	text = "Я тебя не понимаю, поэтому лучше почитай.\n\n\n" + get_random_course_fragment()
+	text = "Я тебя не понимаю, поэтому лучше почитай\n\n\n" + get_random_course_fragment()
 	return bot.send_message(message.chat.id, text)
 
 
@@ -118,6 +117,11 @@ if __name__ == '__main__':
 
 	set_bot_command_list()
 	chats_ids = load_chats_ids_from_file()
+
+	# add_jobs(chats_ids) must be called firstly
+	# tl.start() secondly
+	add_jobs(chats_ids)
+	tl.start()
 
 	platform = get_platform()
 
@@ -139,4 +143,5 @@ if __name__ == '__main__':
 		else:
 			print("undefined machine\nnot running")
 	finally:
+		tl.stop()
 		save_chats_ids_to_file(chats_ids)
