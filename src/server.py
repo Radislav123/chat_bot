@@ -55,7 +55,7 @@ def set_timer_command(message):
 	keyboard_markup = get_keyboard_markup(*keys)
 	return bot.send_message(
 		message.chat.id,
-		"Выберите, как часто я должен отправлять Вам случайный фрагмент материалов курса.\nРаз в ___ час[а|ов].",
+		"Выберите, как часто я должен отправлять Вам случайный фрагмент материалов курса.\n\nРаз в ___ час[а|ов].",
 		reply_markup = keyboard_markup
 	)
 
