@@ -19,3 +19,9 @@ DEADLINES_COMMAND_DESCRIPTION = "список дедлайнов"
 
 INTERVIEW_COMMAND = "interview"
 INTERVIEW_COMMAND_DESCRIPTION = "тут что-то про оценку эффективности курса"
+
+SET_TIMER_COMMAND = "set_timer"
+SET_TIMER_COMMAND_DESCRIPTION = "меню выбора таймера отправки материалов"
+
+GET_TIMER_COMMAND = "get_timer"
+GET_TIMER_COMMAND_DESCRIPTION = "показывает таймер отправки материалов"

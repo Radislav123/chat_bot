@@ -5,6 +5,7 @@ import platform
 import telebot
 import random
 import flask
+import json
 import glob
 import re
 
@@ -151,3 +152,22 @@ def get_help_command_keyboard_markup():
 		url = COURSE_LINK
 	))
 	return keyboard_markup
+
+
+def save_chats_ids_to_file(chats_ids):
+	with open(CHATS_IDS_FILEPATH, 'w') as chats_ids_file:
+		json.dump(chats_ids, chats_ids_file)
+
+
+def load_chats_ids_from_file():
+	json_data = {}
+	try:
+		with open(CHATS_IDS_FILEPATH, 'r') as chats_ids_file:
+			json_data = json.load(chats_ids_file)
+	except FileNotFoundError as error:
+		if error:
+			print(error)
+	if not json_data:
+		json_data = {}
+
+	return json_data

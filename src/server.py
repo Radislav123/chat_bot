@@ -52,6 +52,11 @@ def set_timer_command(message):
 	)
 
 
+@bot.message_handler(commands = ["get_timer"])
+def get_timer_command(message):
+	return bot.send_message(message.chat.id, "Ваш таймер установлен на %d час[а|ов]." % chats_ids[str(message.chat.id)])
+
+
 @bot.callback_query_handler(func = lambda call: True)
 def set_timer_callback_handler(callback):
 	if re.match(r"set timer \d+", callback.data):
@@ -111,22 +116,26 @@ if __name__ == '__main__':
 	time.sleep(0.1)
 
 	set_bot_command_list()
+	chats_ids = load_chats_ids_from_file()
 
 	platform = get_platform()
 
-	if platform == SERVER_MACHINE_NAME:
-		print("running on the dedicated server")
-		# Set webhook
-		bot.set_webhook(url = WEBHOOK_URL_FULL, certificate = open(WEBHOOK_SSL_CERTIFICATE, 'r'))
+	try:
+		if platform == SERVER_MACHINE_NAME:
+			print("running on the dedicated server")
+			# Set webhook
+			bot.set_webhook(url = WEBHOOK_URL_FULL, certificate = open(WEBHOOK_SSL_CERTIFICATE, 'r'))
 
-		# Start flask server
-		app.run(
-			ssl_context = (WEBHOOK_SSL_CERTIFICATE, WEBHOOK_SSL_PRIVATE_KEY),
-			host = WEBHOOK_LISTEN,
-			port = WEBHOOK_PORT
-		)
-	elif platform == LAPTOP_MACHINE_NAME or platform == DESKTOP_MACHINE_NAME:
-		print("running on the local machine")
-		bot.polling(none_stop = True)
-	else:
-		print("undefined machine\nnot running")
+			# Start flask server
+			app.run(
+				ssl_context = (WEBHOOK_SSL_CERTIFICATE, WEBHOOK_SSL_PRIVATE_KEY),
+				host = WEBHOOK_LISTEN,
+				port = WEBHOOK_PORT
+			)
+		elif platform == LAPTOP_MACHINE_NAME or platform == DESKTOP_MACHINE_NAME:
+			print("running on the local machine")
+			bot.polling(none_stop = True)
+		else:
+			print("undefined machine\nnot running")
+	finally:
+		save_chats_ids_to_file(chats_ids)
