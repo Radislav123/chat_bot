@@ -9,7 +9,7 @@ chats_ids = {}
 
 
 # Empty webserver index, return http 200
-@app.route('/', methods = ['GET', 'HEAD'])
+@app.route('/', methods = ["GET", "HEAD"])
 def index():
 	return BOT_HTTP_INDEX_TEXT
 
@@ -26,6 +26,14 @@ def webhook():
 		return flask.abort(403)
 
 
+@bot.callback_query_handler(func = lambda call: True)
+def set_timer_callback_handler(callback):
+	if re.match(r"set timer \d+", callback.data):
+		timer = int(re.findall(r"\d+", callback.data)[0])
+		chats_ids[str(callback.message.chat.id)] = timer
+	return bot.edit_message_text("Время выбрано.", callback.message.chat.id, callback.message.message_id)
+
+
 @bot.message_handler(commands = [START_COMMAND])
 def start_command(message):
 	keyboard_markup = get_help_command_keyboard_markup()
@@ -34,7 +42,7 @@ def start_command(message):
 	return set_timer_command(message)
 
 
-@bot.message_handler(commands = ["set_timer"])
+@bot.message_handler(commands = [SET_TIMER_COMMAND])
 def set_timer_command(message):
 	call_back_data = "set timer %d"
 	timers = [24, 12, 8, 6, 4, 3, 2, 1]
@@ -52,17 +60,9 @@ def set_timer_command(message):
 	)
 
 
-@bot.message_handler(commands = ["get_timer"])
+@bot.message_handler(commands = [GET_TIMER_COMMAND])
 def get_timer_command(message):
 	return bot.send_message(message.chat.id, "Ваш таймер установлен на %d час[а|ов]." % chats_ids[str(message.chat.id)])
-
-
-@bot.callback_query_handler(func = lambda call: True)
-def set_timer_callback_handler(callback):
-	if re.match(r"set timer \d+", callback.data):
-		timer = int(re.findall(r"\d+", callback.data)[0])
-		chats_ids[str(callback.message.chat.id)] = timer
-	return bot.edit_message_text("Время выбрано.", callback.message.chat.id, callback.message.message_id)
 
 
 @bot.message_handler(commands = [HELP_COMMAND])
@@ -104,7 +104,7 @@ def interview_command(message):
 	return bot.send_message(message.chat.id, text)
 
 
-# Handle all other messages
+# Handle all other text messages
 @bot.message_handler(content_types = ["text"])
 def echo_message(message):
 	return bot.send_message(message.chat.id, get_random_course_fragment())
