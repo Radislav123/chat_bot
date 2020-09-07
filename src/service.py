@@ -18,7 +18,7 @@ def get_platform():
 	return platform.node()
 
 
-def get_course_links():
+def get_course_links_keyboard_markup():
 	keys = [
 		telebot.types.InlineKeyboardButton(
 			text = "первая важная ссылка",
@@ -143,3 +143,11 @@ def get_random_course_fragment():
 		text = get_random_course_fragment_from_books()
 	chunks = split_text_by_chunks(text)
 	return chunks[random.randrange(len(chunks))]
+
+
+def get_help_command_keyboard_markup():
+	keyboard_markup = get_keyboard_markup(telebot.types.InlineKeyboardButton(
+		text = COURSE_LINK_DESCRIPTION,
+		url = COURSE_LINK
+	))
+	return keyboard_markup

@@ -3,6 +3,11 @@ from service import *
 import time
 
 
+# For periodic course fragments broadcasting
+# {chat_id: timer}
+chats_ids = {}
+
+
 # Empty webserver index, return http 200
 @app.route('/', methods = ['GET', 'HEAD'])
 def index():
@@ -21,13 +26,43 @@ def webhook():
 		return flask.abort(403)
 
 
-@bot.message_handler(commands = [HELP_COMMAND, START_COMMAND])
+@bot.message_handler(commands = [START_COMMAND])
+def start_command(message):
+	keyboard_markup = get_help_command_keyboard_markup()
+	bot.send_message(message.chat.id, BOT_DESCRIPTION, reply_markup = keyboard_markup)
+
+	return set_timer_command(message)
+
+
+@bot.message_handler(commands = ["set_timer"])
+def set_timer_command(message):
+	call_back_data = "set timer %d"
+	timers = [24, 12, 8, 6, 4, 3, 2, 1]
+	timers.reverse()
+	keys = []
+
+	for timer in timers:
+		keys.append(telebot.types.InlineKeyboardButton(text = str(timer), callback_data = call_back_data % timer))
+
+	keyboard_markup = get_keyboard_markup(*keys)
+	return bot.send_message(
+		message.chat.id,
+		"Выберите, как часто я должен отправлять Вам случайный фрагмент материалов курса.\nРаз в ___ час[а|ов].",
+		reply_markup = keyboard_markup
+	)
+
+
+@bot.callback_query_handler(func = lambda call: True)
+def set_timer_callback_handler(callback):
+	if re.match(r"set timer \d+", callback.data):
+		timer = int(re.findall(r"\d+", callback.data)[0])
+		chats_ids[str(callback.message.chat.id)] = timer
+	return bot.edit_message_text("Время выбрано.", callback.message.chat.id, callback.message.message_id)
+
+
+@bot.message_handler(commands = [HELP_COMMAND])
 def help_command(message):
-	keyboard_markup = get_keyboard_markup(telebot.types.InlineKeyboardButton(
-		text = COURSE_LINK_DESCRIPTION,
-		url = COURSE_LINK
-	))
-	return bot.send_message(message.chat.id, BOT_DESCRIPTION, reply_markup = keyboard_markup)
+	return bot.send_message(message.chat.id, BOT_DESCRIPTION, reply_markup = get_help_command_keyboard_markup())
 
 
 @bot.message_handler(commands = [COMMAND_LIST_COMMAND])
@@ -37,7 +72,11 @@ def command_list_command(message):
 
 @bot.message_handler(commands = [COURSE_LINKS_COMMAND])
 def course_links_command(message):
-	return bot.send_message(message.chat.id, COURSE_LINKS_COMMAND_DESCRIPTION, reply_markup = get_course_links())
+	return bot.send_message(
+		message.chat.id,
+		COURSE_LINKS_COMMAND_DESCRIPTION,
+		reply_markup = get_course_links_keyboard_markup()
+	)
 
 
 @bot.message_handler(commands = [ADDITIONAL_MATERIALS_LINKS_COMMAND])
