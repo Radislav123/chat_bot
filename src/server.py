@@ -55,14 +55,14 @@ def set_timer_command(message):
 	keyboard_markup = get_keyboard_markup(*keys)
 	return bot.send_message(
 		message.chat.id,
-		"Выберите, как часто я должен отправлять Вам случайный фрагмент материалов курса.\n\nРаз в ___ час[а|ов].",
+		"Выберите, как часто я должен отправлять тебе случайный фрагмент материалов курса.\n\nРаз в ___ час[а|ов].",
 		reply_markup = keyboard_markup
 	)
 
 
 @bot.message_handler(commands = [GET_TIMER_COMMAND])
 def get_timer_command(message):
-	return bot.send_message(message.chat.id, "Ваш таймер установлен на %d час[а|ов]." % chats_ids[str(message.chat.id)])
+	return bot.send_message(message.chat.id, "Твой таймер установлен на %d час[а|ов]." % chats_ids[str(message.chat.id)])
 
 
 @bot.message_handler(commands = [HELP_COMMAND])
