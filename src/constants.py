@@ -20,7 +20,7 @@ LAPTOP_MACHINE_NAME = "LAPTOP-8DTEU61A"
 DESKTOP_MACHINE_NAME = "DesktopHome"
 
 BOT_DESCRIPTION = "Тут должно быть описание бота (в том числе и к какому курсу он прикреплен)\nВведите '/'"
-BROADCAST_ADDITIONAL_TEXT = "Вот тебе твоя периодическая рассылка:\n\n\n"
+BROADCAST_ADDITIONAL_TEXT = "Вот тебе твоя периодическая рассылка\n\n\n"
 
 COURSE_LINK = "https://online.hse.ru/course/view.php?id=1845"
 COURSE_LINK_DESCRIPTION = "ссылка на курс"
