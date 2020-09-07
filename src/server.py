@@ -107,7 +107,8 @@ def interview_command(message):
 # Handle all other text messages
 @bot.message_handler(content_types = ["text"])
 def echo_message(message):
-	return bot.send_message(message.chat.id, get_random_course_fragment())
+	text = "Я тебя не понимаю, поэтому лучше почитай.\n\n\n" + get_random_course_fragment()
+	return bot.send_message(message.chat.id, text)
 
 
 if __name__ == '__main__':
