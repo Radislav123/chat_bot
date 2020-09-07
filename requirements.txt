@@ -1,3 +1,4 @@
 pyTelegramBotAPI
 docx2python
+timeloop
 flask
