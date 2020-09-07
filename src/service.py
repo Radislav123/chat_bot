@@ -6,6 +6,7 @@ import telebot
 import random
 import flask
 import glob
+import re
 
 project_root_directory = str(Path().absolute().parent)
 bot = telebot.TeleBot(API_TOKEN)
@@ -120,9 +121,25 @@ def get_random_course_fragment_from_books():
 	return text[1:]
 
 
+def split_text_by_chunks(text):
+	chunks = []
+	first = True
+	for line in text.splitlines(False):
+		words = len(line.split())
+		if first or (words <= 6 and re.match("Группа", line)):
+			first = False
+		elif line != "":
+			if re.match(r"--", line) or re.match(r"\t--", line) or re.match(r"\d\)", line):
+				chunks[-1] += "\n\n" + line
+			else:
+				chunks.append(line)
+	return chunks
+
+
 def get_random_course_fragment():
 	if random.randrange(2):
 		text = get_random_course_fragment_from_pages()
 	else:
 		text = get_random_course_fragment_from_books()
-	return text
+	chunks = split_text_by_chunks(text)
+	return chunks[random.randrange(len(chunks))]
